@@ -1,0 +1,73 @@
+when you have a git repo on local computer and you want to push it to your github for the first time then
+
+1. configure your git (if not)
+    git config --global user.name "your-username"
+    git config --global user.email youremail
+
+2. Create a new repo on github for this repo
+
+(now go into your git repo's folder)
+3. Set origin 
+    git remote add origin your-created-github-repo-link
+    github-repo-link looks is like this: 
+    "https://github.com/username/git-repo.git"
+    (enter the link of that repo which you made in step2)
+    
+3.a) if you have a personal token already set up it is ok move to step 4, otherwise you need to create a personal token and then use it here in git to access your github from terminal
+    Creating personal token
+    (ensure you are logged in into your github)
+    github.com->setting->developer settings->personal-access-tokens->create a new token
+    give token name (like 'for ubuntu')->set permissions
+    set timeout as per your convenience
+    create token
+    copy the token, and go to your git repo using terminal 
+    git config credential.helper store  // this will store token for your this repo only
+    // if you want to do it systemwide stored, i.e. no repo of yours should ask you user pass on this os then do this
+    git config --global credential.helper store
+    
+4. commit all your leftout changes and then push 
+    git add .
+    git commit -m "message"
+    git push origin master
+    (if it asks username & password, enter your github username, and your token value)
+    (it will never ask for password now, because of 3.a last line)
+    
+5. Pull now
+    git pull
+    
+Done.
+
+Note. If you encounter an error in step 5 (probably you would) (happens when your pushed branch is master and github has branch main)
+then do
+    git pull origin main
+    git checkout master
+1. you may "delete the main" branch and just "keep your master" branch
+    git branch -d main
+    git push origin --delete main
+    
+if you want to merge all the content of master branch to main, and delete master branch then i.e. delete master keep main with content of master
+    git checkout main
+    git merge origin master --allow-unrelated-histories
+    or
+    git pull origin master --allow-unrelated-histories
+    (give the commit comment like merging master to main; save)
+    (it would say merged master->main; similar to this)
+    
+    check once 
+        git checkout main
+        ls 
+        check throughly if files have been merged by going into directories
+        git log
+        (check commit in this)
+    now when you are sure, all changes of main are merged to master
+    git push origin main
+    git branch -d master
+    git push origin --delete master
+
+done!!
+
+
+
+
+NOTE: 
+    if
